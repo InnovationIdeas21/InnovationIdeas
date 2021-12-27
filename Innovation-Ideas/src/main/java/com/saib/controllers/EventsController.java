@@ -26,7 +26,7 @@ public class EventsController {
 	 *  PUT - /events/id - Updating an existing event
 	 *  DELETE -/events/id - for deleting an event from db
 	 *  
-	 *  
+	 *  lllll
 	 */
 	
 	@Autowired
