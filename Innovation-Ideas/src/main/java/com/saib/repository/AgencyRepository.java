@@ -9,7 +9,7 @@ import com.saib.models.Agencies;
 
 @Repository
 public interface AgencyRepository extends JpaRepository<Agencies,Long> {
-	List<Agencies> deleteByagencyName(String agencyName);
+
 	
 	
 }

@@ -1,4 +1,7 @@
 package com.saib.controllers;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.saib.config.ApiSucessPayload;
@@ -21,6 +25,7 @@ import com.saib.util.Results;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/users")
 public class UsersController {
 
 		
@@ -36,7 +41,7 @@ public class UsersController {
 	   @Autowired
 	   UserService userService;
 		
-		@GetMapping("/users")
+		@GetMapping()
 		public ResponseEntity<ApiSucessPayload> getAllUsers()
 		{
 			List<Users> list=userService.getAllUsers();
@@ -48,7 +53,7 @@ public class UsersController {
 			
 		}
 		
-		@GetMapping("/users/{UserId}")
+		@GetMapping("/{UserId}")
 		public ResponseEntity<ApiSucessPayload> getUserbyUserId(@PathVariable long UserId)
 		{
 			Users users=userService.getUserbyUserId(UserId);
@@ -59,12 +64,19 @@ public class UsersController {
 		}
 		
 		
-		@PostMapping("/users")
-		public ResponseEntity<ApiSucessPayload> addusers(@RequestBody Users users)
+		@PostMapping()
+		public ResponseEntity<ApiSucessPayload> addusers(@RequestBody Users user) throws NoSuchAlgorithmException
 		{
 			ResponseEntity<ApiSucessPayload> response=null;
-			System.out.println(users);
-			String result=userService.addUser(users);
+			System.out.println(user);
+			MessageDigest messageDigest = MessageDigest.getInstance("MD5");  
+			messageDigest.update(user.getPassword().getBytes(),0, user.getPassword().length());  
+			String hashedPass = new BigInteger(1,messageDigest.digest()).toString(16);  
+			if (hashedPass.length() < 32) {
+			   hashedPass = "0" + hashedPass; 
+			}
+			user.setPassword(hashedPass);
+			String result=userService.addUser(user);
 			if(result.equalsIgnoreCase(Results.SUCCESS))
 			{
 				ApiSucessPayload payload=ApiSucessPayload.build(result, "user created successfully", HttpStatus.CREATED);
@@ -75,8 +87,8 @@ public class UsersController {
 		
 		}
 		
-		@PutMapping("/users/{UserId}")
-		public ResponseEntity<ApiSucessPayload> updateUser (@RequestBody Users users, @PathVariable long UserId)
+		@PutMapping("/{UserId}")
+		public ResponseEntity<ApiSucessPayload> updateUser(@RequestBody Users users, @PathVariable long UserId)
 		{
 			String result=userService.updateUser(users, UserId);
 			ApiSucessPayload payload=ApiSucessPayload.build(result,result,HttpStatus.OK);
@@ -84,7 +96,7 @@ public class UsersController {
 			return response;
 		}
 		
-		@DeleteMapping("/users/{UserId}")
+		@DeleteMapping("/{UserId}")
 		public ResponseEntity<ApiSucessPayload> deleteUser (@PathVariable long UserId)
 		{
 			String result=userService.deleteUser(UserId);

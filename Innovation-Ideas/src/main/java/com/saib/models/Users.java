@@ -6,34 +6,41 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 @Table(name = "users")
 public class Users {
 	@Id
-	@Column(name="users_id")
+	@Column(name="user_id")
 	private long UserId;
 	
 	@Column(name="full_name")
 	private String FullName;
 	
+	
+	@NotBlank(message = "user name is mandatory")
 	@Column(name="user_name")
 	private String UserName;
 	
+	@NotBlank(message = "email is mandatory")
 	@Column(name="email")
 	private String email;
 	
+	@NotBlank(message = "phone is mandatory")
 	@Column(name="phone_num")
 	private String PhoneNum;
 	
 	@Column(name="city")
 	private String city;
 	
+	@NotBlank(message = "password is mandatory")
 	@Column(name="password")
 	private String password;
 	
-	@Column(name="SAIB_employee")
+/*	@Column(name="SAIB_employee")
 	private boolean SAIBEmployee;
-	
+*/	
 	@Column(name="employee_number")
 	private long EmployeeNumber;
 	
@@ -43,7 +50,7 @@ public class Users {
 	}
 
 	public Users(long userId, String fullName, String userName, String email, String phoneNum, String city,
-			String password, boolean sAIBEmployee, long employeeNumber) {
+			String password, long employeeNumber) {
 		super();
 		UserId = userId;
 		FullName = fullName;
@@ -52,7 +59,6 @@ public class Users {
 		PhoneNum = phoneNum;
 		this.city = city;
 		this.password = password;
-		SAIBEmployee = sAIBEmployee;
 		EmployeeNumber = employeeNumber;
 	}
 
@@ -112,14 +118,6 @@ public class Users {
 		this.password = password;
 	}
 
-	public boolean isSAIBEmployee() {
-		return SAIBEmployee;
-	}
-
-	public void setSAIBEmployee(boolean sAIBEmployee) {
-		SAIBEmployee = sAIBEmployee;
-	}
-
 	public long getEmployeeNumber() {
 		return EmployeeNumber;
 	}
@@ -131,11 +129,10 @@ public class Users {
 	@Override
 	public String toString() {
 		return "Users [UserId=" + UserId + ", FullName=" + FullName + ", UserName=" + UserName + ", email=" + email
-				+ ", PhoneNum=" + PhoneNum + ", city=" + city + ", password=" + password + ", SAIBEmployee="
-				+ SAIBEmployee + ", EmployeeNumber=" + EmployeeNumber + "]";
+				+ ", PhoneNum=" + PhoneNum + ", city=" + city + ", password=" + password + ", EmployeeNumber="
+				+ EmployeeNumber + "]";
 	}
 
-	
 	
 	
 	}

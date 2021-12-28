@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import com.saib.models.Events;
 import com.saib.models.Users;
 import com.saib.repository.UserRepository;
 import com.saib.util.Results;
@@ -60,7 +62,7 @@ public class UserService {
 	
 	
 	
-	public String updateUser (Users users, long UserId)
+	public String updateUser(Users users, long UserId)
 	{
 		String result="";
 		
@@ -73,12 +75,13 @@ public class UserService {
 		}
 		else
 		{
+			
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Record was not updated");
+			
 		}
-		return result;	
+		return result;
+		
 	}
-	
-	
 	
 	public String deleteUser(long UserId)
 	{

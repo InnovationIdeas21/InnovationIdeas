@@ -20,7 +20,7 @@ public class AgenciesController {
 		/*
 		 * Get - /Agencies - Get me all Agencies details
 		 * Post - /Agencies - Creating a new Agencie profile
-		 * Delete - /Agencies - for deleting an Agencie from DB
+		 * Put 
 		 */
 		
 		@Autowired
@@ -53,14 +53,7 @@ public class AgenciesController {
 		
 		}
 
-		@DeleteMapping("/agencies/{agency_id}")
-		public ResponseEntity<ApiSucessPayload> deleteByagencyName(@PathVariable String agencyName)
-		{
-			String result=agencyService.deleteByagencyName(agencyName);
-			ApiSucessPayload payload=ApiSucessPayload.build(result,result,HttpStatus.OK);
-			ResponseEntity<ApiSucessPayload> response=new ResponseEntity<ApiSucessPayload>(payload, HttpStatus.OK);
-			return response;
-		}
+
 		
 		
 	}

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.saib.DTO.EventDTO;
 import com.saib.config.ApiSucessPayload;
 import com.saib.models.Events;
 import com.saib.services.EventService;
@@ -26,7 +27,7 @@ public class EventsController {
 	 *  PUT - /events/id - Updating an existing event
 	 *  DELETE -/events/id - for deleting an event from db
 	 *  
-	 *  lllll
+	 *  
 	 */
 	
 	@Autowired
@@ -57,11 +58,11 @@ public class EventsController {
 	
 	*/
 	@PostMapping("/events")
-	public ResponseEntity<ApiSucessPayload> addEvent(@RequestBody Events events)
+	public ResponseEntity<ApiSucessPayload> addEvent(@RequestBody EventDTO events)
 	{
 		ResponseEntity<ApiSucessPayload> response=null;
 		System.out.println(events);
-		String result=eventService.addEvent(events);
+		String result=eventService.addEvent(EventDTO.convert(events));
 		if(result.equalsIgnoreCase(Results.SUCCESS))
 		{
 			ApiSucessPayload payload=ApiSucessPayload.build(result, "Event created successfully", HttpStatus.CREATED);

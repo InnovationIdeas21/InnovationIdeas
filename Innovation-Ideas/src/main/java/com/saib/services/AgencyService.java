@@ -40,11 +40,11 @@ public class AgencyService {
 	
 	
 	
-	public String deleteByagencyName(String agencyName)
+	/**public String deleteAgency(String agencyName)
 	{
 		String result="";
 		try {
-		agencyRepository.deleteByagencyName(agencyName);
+		agencyRepository.deleteAgency(agencyName);
 		
 		
 			result=Results.SUCCESS;
@@ -60,6 +60,7 @@ public class AgencyService {
 	}
 	
 	
+*/
 
 	
 
